@@ -1,0 +1,27 @@
+{
+	"name": "Node.js & PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"ms-azuretools.vscode-docker",
+				"cschlosser.doxdocgen",
+				"AykutSarac.jsoncrack-vscode",
+				"esbenp.prettier-vscode",
+				"Prisma.prisma",
+				"humao.rest-client",
+				"Gruntfuggly.todo-tree",
+				"streetsidesoftware.code-spell-checker-turkish",
+				"redhat.vscode-yaml"
+			]
+		}
+	},
+	"forwardPorts": [
+		4000,
+		5432,
+		5555
+	]
+}
