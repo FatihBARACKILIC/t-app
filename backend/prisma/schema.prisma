@@ -20,8 +20,8 @@ model User {
 
   firstName   String
   lastName    String?
-  username    String
-  email       String
-  phoneNumber String
+  username    String  @unique
+  email       String  @unique
+  phoneNumber String  @unique
   password    String
 }
