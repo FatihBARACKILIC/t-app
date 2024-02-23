@@ -24,4 +24,6 @@ model User {
   email       String  @unique
   phoneNumber String  @unique
   password    String
+
+  activeRefreshToken String?
 }
