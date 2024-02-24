@@ -12,7 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService);
 
-  app.use(cookieParser());
+  app.use(cookieParser(config.get('cookieSecret')));
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new ResponseFilter());
 

@@ -4,6 +4,7 @@ import * as path from 'path';
 export default () => {
   return {
     port: Number(process.env.PORT ?? 4000),
+    cookieSecret: process.env.COOKIE_SECRET ?? 'YOUR_COOKIE_SECRET',
     jwt: {
       algorithm: process.env.JWT_ALGORITHM ?? 'RS256',
       // 15 min

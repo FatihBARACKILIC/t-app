@@ -15,7 +15,7 @@ import {
   generateUserNameIfNotExist,
 } from 'src/shared/utils';
 import { SignInDto, SignUpDto } from './dto';
-import { IAuthService } from './types';
+import { IAuthService } from './interfaces';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -86,11 +86,12 @@ export class AuthService implements IAuthService {
     }
   }
 
-  public async signOut(userId: string): Promise<void> {
+  public async signOut(userId: string): Promise<boolean> {
     await this.prisma.user.update({
       where: { id: userId },
       data: { activeRefreshToken: null },
     });
+    return true;
   }
 
   public async refreshKey(userId: string): Promise<TokenType> {

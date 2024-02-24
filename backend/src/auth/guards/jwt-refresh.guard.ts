@@ -16,7 +16,8 @@ export class RefreshGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    const refreshToken = req.cookies['refresh_token'];
+    // const refreshToken = req.cookies['refresh_token'];
+    const refreshToken = req.signedCookies['refresh_token'];
 
     const payload = await this.jwtService.validateRefreshToken(refreshToken);
     const user = await this.prisma.user.findFirst({
