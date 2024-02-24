@@ -1,5 +1,5 @@
 {
-	"name": "Node.js & PostgreSQL",
+	"name": "T-App Back-End",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
