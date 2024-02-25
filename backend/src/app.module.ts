@@ -5,6 +5,7 @@ import configuration from './shared/config/configuration';
 import { ArgonService } from './shared/services/argon/argon.service';
 import { JsonWebTokenModule } from './shared/services/jwt/json-web-token.module';
 import { PrismaService } from './shared/services/prisma/prisma.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { PrismaService } from './shared/services/prisma/prisma.service';
     }),
     AuthModule,
     JsonWebTokenModule,
+    UserModule,
   ],
   controllers: [],
   providers: [PrismaService, ArgonService, ArgonService],
