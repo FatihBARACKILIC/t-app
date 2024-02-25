@@ -11,13 +11,13 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { cookieOptionsWithExpires } from 'src/shared/options/cookie.options';
-import { AccessToken } from 'src/shared/types';
 import { AuthService } from './auth.service';
 import { GetUser } from './decorators';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { RefreshGuard } from './guards';
 import { IAuthController } from './interfaces/auth_controller.interface';
+import { PublicUserType } from './types';
 
 @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
 @Controller()
@@ -29,22 +29,28 @@ export class AuthController implements IAuthController {
   async signIn(
     @Body() signInDto: SignInDto,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<AccessToken> {
-    const { access_token, refresh_token } =
-      await this.authService.signIn(signInDto);
+  ): Promise<PublicUserType> {
+    const {
+      user,
+      tokens: { access_token, refresh_token },
+    } = await this.authService.signIn(signInDto);
     res.cookie('refresh_token', refresh_token, cookieOptionsWithExpires(365));
-    return { access_token };
+    res.setHeader('authorization', `Bearer ${access_token}`);
+    return user;
   }
 
   @Post('signup')
   async signUp(
     @Body() signUpDto: SignUpDto,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<AccessToken> {
-    const { access_token, refresh_token } =
-      await this.authService.signUp(signUpDto);
+  ): Promise<PublicUserType> {
+    const {
+      user,
+      tokens: { access_token, refresh_token },
+    } = await this.authService.signUp(signUpDto);
     res.cookie('refresh_token', refresh_token, cookieOptionsWithExpires(365));
-    return { access_token };
+    res.setHeader('authorization', `Bearer ${access_token}`);
+    return user;
   }
 
   @HttpCode(HttpStatus.OK)
@@ -66,10 +72,13 @@ export class AuthController implements IAuthController {
   async refreshKey(
     @GetUser('id') userId: string,
     @Res({ passthrough: true }) res: Response,
-  ): Promise<AccessToken> {
-    const { access_token, refresh_token } =
-      await this.authService.refreshKey(userId);
+  ): Promise<PublicUserType> {
+    const {
+      user,
+      tokens: { access_token, refresh_token },
+    } = await this.authService.refreshKey(userId);
     res.cookie('refresh_token', refresh_token, cookieOptionsWithExpires(365));
-    return { access_token };
+    res.setHeader('authorization', `Bearer ${access_token}`);
+    return user;
   }
 }

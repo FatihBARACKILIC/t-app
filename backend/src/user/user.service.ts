@@ -3,11 +3,15 @@ import { PrismaService } from 'src/shared/services/prisma/prisma.service';
 import { filterPublicUserData } from 'src/shared/utils/filter-public-user.data';
 import { UpdateUserDto } from './dto';
 import { IUserService } from './interfaces';
-import { PublicUserType } from './types';
+import { AuthReturnType, PublicUserType } from 'src/auth/types';
+import { JsonWebTokenService } from 'src/shared/services/jwt/json-web-token.service';
 
 @Injectable()
 export class UserService implements IUserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jsonWebTokenService: JsonWebTokenService,
+  ) {}
 
   async getUser(username: string): Promise<PublicUserType> {
     const user = await this.prisma.user.findUnique({ where: { username } });
@@ -18,12 +22,18 @@ export class UserService implements IUserService {
   async updateUser(
     userId: string,
     updateUserDto: UpdateUserDto,
-  ): Promise<PublicUserType> {
+  ): Promise<AuthReturnType> {
     const newData = await this.prisma.user.update({
       data: { ...updateUserDto },
       where: { id: userId },
     });
-    return filterPublicUserData(newData);
+
+    const tokens = await this.jsonWebTokenService.generateTokens(newData);
+
+    return {
+      user: filterPublicUserData(newData),
+      tokens,
+    };
   }
 
   async deleteUser(userId: string): Promise<{ isDeleted: boolean }> {

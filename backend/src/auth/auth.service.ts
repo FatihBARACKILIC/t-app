@@ -9,13 +9,14 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { ArgonService } from 'src/shared/services/argon/argon.service';
 import { JsonWebTokenService } from 'src/shared/services/jwt/json-web-token.service';
 import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import { TokenType } from 'src/shared/types';
 import {
   formatPhoneNumber,
   generateUserNameIfNotExist,
 } from 'src/shared/utils';
 import { SignInDto, SignUpDto } from './dto';
 import { IAuthService } from './interfaces';
+import { AuthReturnType } from './types';
+import { filterPublicUserData } from 'src/shared/utils/filter-public-user.data';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -25,7 +26,7 @@ export class AuthService implements IAuthService {
     private readonly argonService: ArgonService,
   ) {}
 
-  public async signIn(signInDto: SignInDto): Promise<TokenType> {
+  public async signIn(signInDto: SignInDto): Promise<AuthReturnType> {
     const { password } = signInDto;
 
     const signInKeys = Object.keys(signInDto);
@@ -50,10 +51,10 @@ export class AuthService implements IAuthService {
     if (!isValid) throw invalidUserError;
 
     const tokens = await this.jsonWebTokenService.generateTokens(user);
-    return tokens;
+    return { user: filterPublicUserData(user), tokens };
   }
 
-  public async signUp(signUpDto: SignUpDto): Promise<TokenType> {
+  public async signUp(signUpDto: SignUpDto): Promise<AuthReturnType> {
     try {
       const username = generateUserNameIfNotExist(signUpDto.username);
       const phoneNumber = formatPhoneNumber(signUpDto.phoneNumber);
@@ -69,7 +70,7 @@ export class AuthService implements IAuthService {
       });
 
       const tokens = await this.jsonWebTokenService.generateTokens(createdUser);
-      return tokens;
+      return { user: filterPublicUserData(createdUser), tokens };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
@@ -94,10 +95,10 @@ export class AuthService implements IAuthService {
     return true;
   }
 
-  public async refreshKey(userId: string): Promise<TokenType> {
+  public async refreshKey(userId: string): Promise<AuthReturnType> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new UnauthorizedException();
     const tokens = await this.jsonWebTokenService.generateTokens(user);
-    return tokens;
+    return { user: filterPublicUserData(user), tokens };
   }
 }

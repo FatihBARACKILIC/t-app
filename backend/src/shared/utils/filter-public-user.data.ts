@@ -1,4 +1,4 @@
-import { PublicUserType } from 'src/user/types';
+import { PublicUserType } from 'src/auth/types';
 
 export function filterPublicUserData({
   createdAt,

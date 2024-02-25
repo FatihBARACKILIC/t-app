@@ -40,4 +40,4 @@ Cookie: {{SignIn.response.headers.Set-Cookie}}
 # @name RefreshToken
 POST {{url}}refresh-key HTTP/1.1
 Cookie: {{SignIn.response.headers.Set-Cookie}}
-Authorization: Bearer {{SignIn.response.body.result.access_token}}
+Authorization: Bearer {{SignIn.response.headers.authorization}}
