@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -26,4 +26,26 @@ model User {
   password    String
 
   activeRefreshToken String?
+
+  todo Todo[]
+}
+
+model Todo {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title       String
+  description String?
+  priority    Priority @default(p0)
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+enum Priority {
+  p0
+  p1
+  p2
+  p3
 }

@@ -6,6 +6,7 @@ import { ArgonService } from './shared/services/argon/argon.service';
 import { JsonWebTokenModule } from './shared/services/jwt/json-web-token.module';
 import { PrismaService } from './shared/services/prisma/prisma.service';
 import { UserModule } from './user/user.module';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     JsonWebTokenModule,
     UserModule,
+    TodoModule,
   ],
   controllers: [],
   providers: [PrismaService, ArgonService, ArgonService],
