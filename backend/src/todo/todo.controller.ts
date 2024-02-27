@@ -11,8 +11,8 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Todo } from '@prisma/client';
-import { GetUser } from 'src/auth/decorators';
-import { AccessGuard } from 'src/auth/guards';
+import { GetUser } from '../auth/decorators';
+import { AccessGuard } from '../auth/guards';
 import { CreateTodoDto, UpdateTodoDto } from './dto';
 import { TodoService } from './todo.service';
 import { ITodoController } from './interfaces';

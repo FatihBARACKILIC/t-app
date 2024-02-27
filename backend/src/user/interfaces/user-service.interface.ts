@@ -1,4 +1,4 @@
-import { AuthReturnType, PublicUserType } from 'src/auth/types';
+import { AuthReturnType, PublicUserType } from '../../auth/types';
 import { UpdateUserDto } from '../dto';
 
 export interface IUserService {

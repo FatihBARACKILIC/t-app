@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ArgonService } from 'src/shared/services/argon/argon.service';
-import { JsonWebTokenModule } from 'src/shared/services/jwt/json-web-token.module';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
+import { PrismaModule } from '../shared/services/prisma/prisma.module';
+import { ArgonService } from './../shared/services/argon/argon.service';
+import { JsonWebTokenModule } from './../shared/services/jwt/json-web-token.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports: [JsonWebTokenModule],
+  imports: [JsonWebTokenModule, PrismaModule],
   controllers: [AuthController],
-  providers: [AuthService, PrismaService, ArgonService],
+  providers: [AuthService, ArgonService],
 })
 export class AuthModule {}

@@ -1,13 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import {
-  AccessToken,
-  Payload,
-  RefreshToken,
-  TokenType,
-} from 'src/shared/types';
+import { AccessToken, Payload, RefreshToken, TokenType } from '../../types';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class JsonWebTokenService {

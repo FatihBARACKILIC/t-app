@@ -9,16 +9,16 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { GetUser } from 'src/auth/decorators';
-import { AccessGuard, AuthorizationGuard } from 'src/auth/guards';
-import { PasswordControlGuard } from 'src/auth/guards/password-control.guard';
+import { GetUser } from '../auth/decorators';
+import { AccessGuard, AuthorizationGuard } from '../auth/guards';
+import { PasswordControlGuard } from '../auth/guards/password-control.guard';
 import { GetUpdateUserDto } from './decorators/get-update-user-dto.decorator';
 import { UpdateUserDto } from './dto';
 import { IUserController } from './interfaces';
 import { UserService } from './user.service';
-import { PublicUserType } from 'src/auth/types';
+import { PublicUserType } from '../auth/types';
 import { Response } from 'express';
-import { cookieOptionsWithExpires } from 'src/shared/options/cookie.options';
+import { cookieOptionsWithExpires } from '../shared/options/cookie.options';
 
 @Controller('user/:username')
 @UseGuards(AccessGuard, AuthorizationGuard)

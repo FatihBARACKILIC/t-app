@@ -4,8 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { JsonWebTokenService } from 'src/shared/services/jwt/json-web-token.service';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
+import { JsonWebTokenService } from '../../shared/services/jwt/json-web-token.service';
+import { PrismaService } from '../../shared/services/prisma/prisma.service';
 
 @Injectable()
 export class TodoAuthorizationGuard implements CanActivate {

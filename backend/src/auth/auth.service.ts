@@ -6,17 +6,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { ArgonService } from 'src/shared/services/argon/argon.service';
-import { JsonWebTokenService } from 'src/shared/services/jwt/json-web-token.service';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import {
-  formatPhoneNumber,
-  generateUserNameIfNotExist,
-} from 'src/shared/utils';
+import { ArgonService } from '../shared/services/argon/argon.service';
+import { JsonWebTokenService } from '../shared/services/jwt/json-web-token.service';
+import { PrismaService } from '../shared/services/prisma/prisma.service';
+import { formatPhoneNumber, generateUserNameIfNotExist } from '../shared/utils';
+import { filterPublicUserData } from '../shared/utils/filter-public-user.data';
 import { SignInDto, SignUpDto } from './dto';
 import { IAuthService } from './interfaces';
 import { AuthReturnType } from './types';
-import { filterPublicUserData } from 'src/shared/utils/filter-public-user.data';
 
 @Injectable()
 export class AuthService implements IAuthService {

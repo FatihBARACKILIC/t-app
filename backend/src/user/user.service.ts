@@ -1,10 +1,10 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { PrismaService } from 'src/shared/services/prisma/prisma.service';
-import { filterPublicUserData } from 'src/shared/utils/filter-public-user.data';
+import { PrismaService } from '../shared/services/prisma/prisma.service';
+import { filterPublicUserData } from '../shared/utils/filter-public-user.data';
 import { UpdateUserDto } from './dto';
 import { IUserService } from './interfaces';
-import { AuthReturnType, PublicUserType } from 'src/auth/types';
-import { JsonWebTokenService } from 'src/shared/services/jwt/json-web-token.service';
+import { AuthReturnType, PublicUserType } from '../auth/types';
+import { JsonWebTokenService } from '../shared/services/jwt/json-web-token.service';
 
 @Injectable()
 export class UserService implements IUserService {

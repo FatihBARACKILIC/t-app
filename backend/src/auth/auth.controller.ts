@@ -10,7 +10,6 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { cookieOptionsWithExpires } from 'src/shared/options/cookie.options';
 import { AuthService } from './auth.service';
 import { GetUser } from './decorators';
 import { SignInDto } from './dto/sign-in.dto';
@@ -18,6 +17,7 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { RefreshGuard } from './guards';
 import { IAuthController } from './interfaces/auth_controller.interface';
 import { PublicUserType } from './types';
+import { cookieOptionsWithExpires } from '../shared/options/cookie.options';
 
 @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
 @Controller()

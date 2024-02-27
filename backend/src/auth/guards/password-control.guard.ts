@@ -4,7 +4,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { ArgonService } from 'src/shared/services/argon/argon.service';
+import { ArgonService } from '../../shared/services/argon/argon.service';
 
 @Injectable()
 export class PasswordControlGuard implements CanActivate {
