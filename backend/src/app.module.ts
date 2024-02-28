@@ -7,6 +7,8 @@ import { JsonWebTokenModule } from './shared/services/jwt/json-web-token.module'
 import { PrismaModule } from './shared/services/prisma/prisma.module';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { UserModule } from './user/user.module';
     TodoModule,
     PrismaModule,
   ],
-  controllers: [],
-  providers: [ArgonService, ArgonService],
+  controllers: [AppController],
+  providers: [AppService, ArgonService, ArgonService],
 })
 export class AppModule {}

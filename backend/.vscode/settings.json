@@ -10,6 +10,7 @@
         "pkeyopt",
         "pubout",
         "signin",
-        "signout"
+        "signout",
+        "signup"
     ]
 }
