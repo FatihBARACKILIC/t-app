@@ -11,8 +11,3 @@ Todo App
 - Docker
 - PostgreSQL
 - JWT
-
-### Mobile App
-
-- Dart
-- Flutter
