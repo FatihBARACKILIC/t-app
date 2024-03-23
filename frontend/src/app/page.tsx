@@ -1,9 +1,8 @@
-import { ModeToggle } from "@/components/theme";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="m-auto flex items-center justify-center h-screen gap-4 flex-col">
+    <main className="m-auto grid h-screen place-items-center">
       <Image
         src="/logo.png"
         alt="logo"
