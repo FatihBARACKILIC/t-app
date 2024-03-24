@@ -1,3 +1,4 @@
+import NavBar from "@/components/navbar/NavBar";
 import { ThemeProvider } from "@/components/theme";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
@@ -33,6 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <NavBar />
           {children}
         </ThemeProvider>
       </body>
