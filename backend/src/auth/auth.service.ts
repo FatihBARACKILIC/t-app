@@ -24,19 +24,21 @@ export class AuthService implements IAuthService {
   ) {}
 
   public async signIn(signInDto: SignInDto): Promise<AuthReturnType> {
-    const { password } = signInDto;
+    const { email, phoneNumber, username, password } = signInDto;
 
-    const signInKeys = Object.keys(signInDto);
-    // ?  remove password from list
-    signInKeys.pop();
-    if (signInKeys.length !== 1) {
+    let key: keyof SignInDto;
+    if (email) {
+      key = 'email';
+    } else if (phoneNumber) {
+      key = 'phoneNumber';
+    } else if (username) {
+      key = 'username';
+    } else {
       throw new BadRequestException(
         'Fill only one of the fields email, phoneNumber, username',
       );
     }
-
-    const key = signInKeys[0];
-    let value = signInDto[key as keyof SignInDto]!;
+    let value = signInDto[key]!;
     if (value === 'phoneNumber') value = formatPhoneNumber(value);
     const user = await this.prisma.user.findFirst({ where: { [key]: value } });
 
