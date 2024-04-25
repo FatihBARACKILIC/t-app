@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export function Provider({ children }: Props) {
+export function Providers({ children }: Props) {
   return (
     <ThemeProvider
       attribute="class"
