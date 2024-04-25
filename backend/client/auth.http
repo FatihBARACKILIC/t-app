@@ -13,7 +13,7 @@ Content-Type: application/json
 
 {
     # "email": "user@gmail.com",
-    "phoneNumber": "5555554444",
+    "phoneNumber": "05555554444",
     # "username": "username",
     "password":"PassworD*/12"
 }
@@ -34,10 +34,10 @@ Content-Type: application/json
 ### 
 # @name SignOut
 POST {{url}}signout HTTP/1.1
-Cookie: {{SignIn.response.headers.Set-Cookie}}
+Authorization: Refresh {{SignIn.response.body.result.tokens.refresh_token}}
 
 ###
 # @name RefreshToken
 POST {{url}}refresh-key HTTP/1.1
-Cookie: {{SignIn.response.headers.Set-Cookie}}
-Authorization: Bearer {{SignIn.response.headers.authorization}}
+Authorization: Refresh {{RefreshToken.response.body.result.tokens.refresh_token}}
+# Authorization: Refresh {{SignIn.response.body.result.tokens.refresh_token}}

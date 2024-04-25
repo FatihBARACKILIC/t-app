@@ -15,7 +15,7 @@ Content-Type: application/json
 # @name CreateTodo
 POST {{todoUrl}} HTTP/1.1
 Content-Type: application/json
-Authorization: {{SignIn.response.headers.authorization}}
+Authorization: Bearer {{SignIn.response.body.result.tokens.access_token}}
 
 {
     "title": "todo deneme",
@@ -26,18 +26,18 @@ Authorization: {{SignIn.response.headers.authorization}}
 ###
 # @name GetTodoList
 GET {{todoUrl}} HTTP/1.1
-Authorization: {{SignIn.response.headers.authorization}}
+Authorization: Bearer {{SignIn.response.body.result.tokens.access_token}}
 
 ###
 # @name GetTodo
 GET {{todoUrl}}4a9bb157-43e2-4ea3-8b6a-5a5dd1506aa1 HTTP/1.1
-Authorization: {{SignIn.response.headers.authorization}}
+Authorization: Bearer {{SignIn.response.body.result.tokens.access_token}}
 
 ###
 # @name UpdateTodo
 PATCH {{todoUrl}}4a9bb157-43e2-4ea3-8b6a-5a5dd1506aa1 HTTP/1.1
 Content-Type: application/json
-Authorization: {{SignIn.response.headers.authorization}}
+Authorization: Bearer {{SignIn.response.body.result.tokens.access_token}}
 
 {
     "title": "todo updated",
@@ -47,4 +47,4 @@ Authorization: {{SignIn.response.headers.authorization}}
 ###
 # @name DeleteTodo
 DELETE {{todoUrl}}4a9bb157-43e2-4ea3-8b6a-5a5dd1506aa1 HTTP/1.1
-Authorization: {{SignIn.response.headers.authorization}}
+Authorization: Bearer {{SignIn.response.body.result.tokens.access_token}}

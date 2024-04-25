@@ -16,9 +16,9 @@ export class AccessGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    const accessToken = req.headers['authorization']?.split(' ')[1];
-
-    if (!accessToken) throw new UnauthorizedException();
+    const [tokenType, accessToken] = req.headers['authorization']?.split(' ');
+    if (tokenType !== 'Bearer' || !accessToken)
+      throw new UnauthorizedException();
 
     const payload = await this.jwtService.validateAccessToken(accessToken);
     const user = await this.prisma.user.findFirst({
