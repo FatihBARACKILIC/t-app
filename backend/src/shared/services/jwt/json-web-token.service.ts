@@ -15,9 +15,7 @@ export class JsonWebTokenService {
   async generateTokens({ id, email }: Payload): Promise<TokenType> {
     const { access_token } = await this.generateAccessToken({ id, email });
     const { refresh_token } = await this.generateRefreshToken({ id, email });
-    const expires_in = new Date().setTime(
-      new Date().getTime() + +this.configService.get('jwt.accessExpiresIn'),
-    );
+    const expires_in = +this.configService.get('jwt.accessExpiresIn') * 1000;
 
     return { access_token, refresh_token, expires_in };
   }

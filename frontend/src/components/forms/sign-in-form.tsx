@@ -2,6 +2,7 @@
 
 import { regex } from "@/lib/regex";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -15,7 +16,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import validator from "validator";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -27,6 +28,8 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>;
 
 export function SignInForm({}: Props) {
+  const router = useRouter();
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -36,29 +39,37 @@ export function SignInForm({}: Props) {
   });
 
   const onSubmit = async (values: FormSchema) => {
-    const { username, password } = values;
-    const body: Record<string, string> = { password };
-
-    const isEmail = z.string().email().safeParse(username);
-    const isPhoneNumber = z
-      .string()
-      .refine(validator.isMobilePhone)
-      .safeParse(username);
-
-    if (isEmail.success === true) body.email = username;
-    else if (isPhoneNumber.success === true) body.phoneNumber = username;
-    else body.username = username;
-
-    const result = await fetch("http://localhost:4000/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
+    const res = await signIn("credentials", {
+      username: values.username,
+      password: values.password,
+      redirect: false,
     });
-    if (!result.ok) {
-      const error = await result.json();
+    if (!res?.error) {
+      router.push("http://localhost:3000");
     }
-    const data = await result.json();
-    console.log(data);
+    // const { username, password } = values;
+    // const body: Record<string, string> = { password };
+
+    // const isEmail = z.string().email().safeParse(username);
+    // const isPhoneNumber = z
+    //   .string()
+    //   .refine(validator.isMobilePhone)
+    //   .safeParse(username);
+
+    // if (isEmail.success === true) body.email = username;
+    // else if (isPhoneNumber.success === true) body.phoneNumber = username;
+    // else body.username = username;
+
+    // const result = await fetch("http://localhost:4000/signin", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(body),
+    // });
+    // if (!result.ok) {
+    //   const error = await result.json();
+    // }
+    // const data = await result.json();
+    // console.log(data);
   };
 
   return (

@@ -29,8 +29,8 @@ export class RefreshGuard implements CanActivate {
     });
     if (
       !user ||
-      user.email !== payload.email ||
-      refreshToken !== user?.activeRefreshToken
+      user.email !== payload.email
+      //  || refreshToken !== user?.activeRefreshToken
     )
       throw new UnauthorizedException('Invalid refresh token');
     req.user = user;
